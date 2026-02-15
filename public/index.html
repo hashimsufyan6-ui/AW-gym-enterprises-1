@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AW GYM: IRON SANCTUARY [MASTER_NODE]</title>
     
-    <!-- TAILWIND CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- GSAP ANIMATION -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
-    <!-- CYBER FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -62,7 +59,6 @@
         @keyframes scan { 0% {top:0%} 100% {top:100%} }
 
         /* --- PRODUCT GRID --- */
-        /* Forces 3 columns on desktop, 1 on mobile */
         .vault-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -78,7 +74,7 @@
 
         .product-card {
             position: relative;
-            height: 500px; /* Tall cards */
+            height: 500px; 
             border: 1px solid rgba(255,255,255,0.1);
             background: #000;
             overflow: hidden;
@@ -118,7 +114,6 @@
             z-index: 3;
         }
 
-        /* NEGOTIATE BUTTON */
         .btn-buy {
             background: var(--neon-gold);
             color: black;
@@ -131,19 +126,28 @@
         }
         .btn-buy:hover { background: white; }
 
+        /* Added Styling for Login Link */
+        .nav-login-link {
+            border: 1px solid var(--neon-red);
+            padding: 4px 12px;
+            transition: 0.3s;
+        }
+        .nav-login-link:hover {
+            background: var(--neon-red);
+            color: white;
+            box-shadow: 0 0 10px var(--neon-red);
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- ============================================================== -->
-    <!-- LAYER 1: SECURITY GATE (LOGIN)                                 -->
-    <!-- ============================================================== -->
     <div id="gate-layer">
-        <!-- LOGIN BACKGROUND VIDEO -->
-        <video id="login-video-bg" class="fullscreen-video" autoplay muted loop playsinline  <source src="/videos/intro.video.mp4"
-    ></video>
+        <video id="login-video-bg" class="fullscreen-video" autoplay muted loop playsinline>
+            <source src="/videos/intro.video.mp4">
+        </video>
         
-        <div class="absolute inset-0 bg-black/80"></div> <!-- Darken Overlay -->
+        <div class="absolute inset-0 bg-black/80"></div> 
         <div class="scan-line"></div>
 
         <div class="relative z-10 text-center max-w-md w-full p-6 border-x-2 border-red-600 bg-black/90">
@@ -152,37 +156,35 @@
             
             <div class="text-left space-y-4">
                 <p class="text-gray-400 italic text-sm border-l-2 border-red-500 pl-3">
-                    "Guard: State your name. If you're not on the list, you don't get in."
+                    "Identify through secure portal to access the Vault."
                 </p>
-                <input type="text" id="username" placeholder="ENTER CODENAME..." 
-                       class="w-full bg-gray-900 border border-gray-700 text-white p-4 font-hud uppercase focus:border-red-500 outline-none">
                 
-                <button onclick="enterGym()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-4 font-hud tracking-widest clip-path-polygon">
-                    SCAN ID & ENTER
+                <a href="login.html" style="display: block; text-align: center;" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-4 font-hud tracking-widest clip-path-polygon">
+                    AUTHENTICATE VIA GOOGLE
+                </a>
+                
+                <button onclick="enterGymAsGuest()" class="w-full border border-gray-700 text-gray-500 hover:text-white py-2 text-xs font-hud">
+                    CONTINUE AS GUEST [LIMITED]
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- ============================================================== -->
-    <!-- LAYER 2: THE GYM INTERIOR (MAIN SITE)                          -->
-    <!-- ============================================================== -->
     <div id="gym-layer" class="hidden opacity-0 transition-opacity duration-1000">
         
-        <!-- GYM BACKGROUND VIDEO -->
-        <video id="gym-video-bg" class="fullscreen-video"
-    autoplay muted loop playsinline
-     <source src="gym video.background"
-     ></video>
-        <div class="fixed inset-0 bg-black/70 z-[-1]"></div> <!-- Tint -->
+        <video id="gym-video-bg" class="fullscreen-video" autoplay muted loop playsinline>
+             <source src="gym video.background">
+        </video>
+        <div class="fixed inset-0 bg-black/70 z-[-1]"></div> 
 
-        <!-- NAV -->
         <nav class="sticky top-0 z-50 bg-black/90 border-b border-gray-800 backdrop-blur-md px-6 py-4 flex justify-between items-center">
             <div class="font-hud text-xl tracking-widest">AW <span class="text-yellow-500">GYM</span></div>
-            <div class="text-xs font-mono text-green-500">● SECURE CONNECTION</div>
+            <div class="flex items-center gap-6">
+                <div class="text-xs font-mono text-green-500 hidden md:block">● SECURE CONNECTION</div>
+                <a href="login.html" class="font-hud text-xs tracking-tighter nav-login-link">PORTAL LOGIN</a>
+            </div>
         </nav>
 
-        <!-- HEADER / MANAGER -->
         <header class="container mx-auto px-4 py-12 border-b border-gray-800 mb-12">
             <div class="flex flex-col md:flex-row gap-6 items-end">
                 <div class="bg-yellow-500 text-black font-bold px-4 py-1 text-xs">THE MANAGER</div>
@@ -196,33 +198,18 @@
             </p>
         </header>
 
-        <!-- THE 12 PRODUCTS GRID -->
         <main class="container mx-auto px-4">
             <div id="products-container" class="vault-grid">
-                <!-- JAVASCRIPT WILL INJECT 12 PRODUCTS HERE -->
-            </div>
+                </div>
         </main>
         
     </div>
 
-    <!-- ============================================================== -->
-    <!-- SYSTEM BRAIN (CONFIGURATION & LOGIC)                           -->
-    <!-- ============================================================== -->
     <script>
-        
-        // ============================================================
-        // 🛠️ SYSTEM MEDIA CONFIGURATION (EDIT HERE)
-        // ============================================================
         const CONFIG = {
-            whatsapp_number: "+92 349 7814918", // YOUR NUMBER HERE
-            
-            // 1. LOGIN SCREEN BACKGROUND VIDEO
+            whatsapp_number: "+92 349 7814918",
             login_bg: "/videos/intro.video.mp4", 
-            
-            // 2. GYM INTERIOR BACKGROUND VIDEO
             gym_bg: "/videos/lv_0_20260213174657.mp4",
-
-            // 3. THE 12 PRODUCTS (VIDEO PATHS & PRICES)
             vault_inventory: [
                 {
                     name: "WHEY ISOLATE GOLD",
@@ -256,25 +243,25 @@
                 },
                 {
                     name: "leg press",
-                    price: "70000",
+                    price: "3,500",
                     desc: "7mm Neoprene for squat safety.",
                     video: "/videos/RITFIT GAZELLE 3-in-1 Leg Press Hack Squat Machine for Home Gym(720P_HD).mp4"
                 },
                 {
                     name: "mats",
-                    price: "350-1200",
+                    price: "5,500",
                     desc: "45L Capacity with wet compartment.",
                     video: "/videos/Square36 Large Exercise and Yoga Mats(720P_HD).mp4"
                 },
                 {
                     name: "dumbbells",
-                    price: "5600",
+                    price: "1,200",
                     desc: "Insulated stainless steel.",
                     video: "/videos/VID_20260213175502.mp4"
                 },
                 {
                     name: "treadmill",
-                    price: "90000",
+                    price: "900",
                     desc: "Cotton blend with silicone grip.",
                     video: "/videos/No Matter Where You Start - NordicTrack Commercial 2950 Treadmill Powered by iFit(720P_HD).mp4"
                 },
@@ -293,17 +280,10 @@
             ]
         };
 
-        // ============================================================
-        // ⚙️ SYSTEM INITIALIZATION
-        // ============================================================
-
-        // 1. SET BACKGROUND VIDEOS
         document.getElementById('login-video-bg').src = CONFIG.login_bg;
         document.getElementById('gym-video-bg').src = CONFIG.gym_bg;
 
-        // 2. GENERATE PRODUCT GRID
         const container = document.getElementById('products-container');
-
         CONFIG.vault_inventory.forEach((item, index) => {
             const card = document.createElement('div');
             card.className = "product-card group";
@@ -324,48 +304,20 @@
                     </div>
                 </div>
             `;
-            
-            // Mouse Interaction (Desktop)
             card.addEventListener('mouseenter', () => { card.querySelector('video').play(); });
             card.addEventListener('mouseleave', () => { card.querySelector('video').pause(); });
-            
-            // Touch Interaction (Mobile)
-            card.addEventListener('touchstart', () => {
-                document.querySelectorAll('video').forEach(v => v.pause()); // Pause others
-                card.querySelector('video').play();
-            });
-
             container.appendChild(card);
         });
 
-        // 3. LOGIC FUNCTIONS
-        function enterGym() {
-            const user = document.getElementById('username').value;
-            if(user.length < 1) {
-                alert("ACCESS DENIED: IDENTIFY YOURSELF");
-                return;
-            }
-
-            document.getElementById('display-name').innerText = user.toUpperCase();
-
-            // GSAP Transition
+        function enterGymAsGuest() {
             gsap.to("#gate-layer", {
                 opacity: 0,
                 duration: 1.5,
-                ease: "power2.inOut",
                 onComplete: () => {
                     document.getElementById('gate-layer').style.display = "none";
                     const gym = document.getElementById('gym-layer');
                     gym.classList.remove("hidden");
-                    
                     gsap.to(gym, { opacity: 1, duration: 1 });
-                    gsap.from(".product-card", {
-                        y: 100,
-                        opacity: 0,
-                        stagger: 0.1,
-                        duration: 0.8,
-                        ease: "back.out(1.7)"
-                    });
                 }
             });
         }
@@ -374,7 +326,7 @@
             const text = `Salam AW Gym. I am in the Vault. I want to buy *${name}*. Price listed: PKR ${price}. Let's close the deal.`;
             window.open(`https://wa.me/${CONFIG.whatsapp_number}?text=${encodeURIComponent(text)}`, '_blank');
         }
-
     </script>
 </body>
 </html>
+
