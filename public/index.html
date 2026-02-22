@@ -128,11 +128,8 @@
     </style>
 </head>
 <body>
-
-    <div id="gate-layer">
-        <video id="login-video-bg" class="fullscreen-video" autoplay muted loop playsinline></video>
-        <div class="absolute inset-0 bg-black/80"></div> 
-        <div class="scan-line"></div>
+video id="login-video-bg" class="fullscreen-video" autoplay muted loop playsinline  <source src="/videos/intro.video.mp4"
+    ></video>
 
         <div class="relative z-10 text-center max-w-md w-full p-6 border-x-2 border-red-600 bg-black/90">
             <h1 class="font-hud text-4xl text-white mb-2 tracking-tighter">RESTRICTED ACCESS</h1>
@@ -154,10 +151,12 @@
             </div>
         </div>
     </div>
-
-    <div id="gym-layer" class="hidden opacity-0 transition-opacity duration-1000">
-        <video id="gym-video-bg" class="fullscreen-video" autoplay muted loop playsinline></video>
-        <div class="fixed inset-0 bg-black/70 z-[-1]"></div> 
+    <video id="gym-video-bg" class="fullscreen-video"
+      autoplay muted loop playsinline
+      <source src="gym video.background"
+       ></video>
+        <div class="fixed inset-0 bg-black/70 z-[-1]"></div> <
+    
 
         <nav class="sticky top-0 z-50 bg-black/90 border-b border-gray-800 backdrop-blur-md px-6 py-4 flex justify-between items-center">
             <div class="font-hud text-xl tracking-widest">AW <span class="text-yellow-500">GYM</span></div>
@@ -188,7 +187,7 @@
             login_bg: "/videos/intro.video.mp4", 
             gym_bg: "/videos/lv_0_20260213174657.mp4",
             vault_inventory: [
-                { name: "WHEY ISOLATE GOLD", price: "18,500", desc: "Top tier recovery protein. 90% purity.", video: "/videos/Whey protein AD _ Vlad rum video(720P_HD).mp4" },
+                { name: "WHEY ISOLATE GOLD", price: "18,500", desc: "Top tier recovery protein. 90% purity.", video: "/videos/Whey protein AD _ Vlad rum video(720P_HD).mp4"
                 { name: "PSYCHOTIC PRE-WORKOUT", price: "6,500", desc: "High stimulant energy matrix.", video: "/videos/Cinematic C4 Pre Workout Commercial(720P_HD).mp4" },
                 { name: "CREATINE MONOHYDRATE", price: "4,500", desc: "Pure micronized strength powder.", video: "/videos/Pure Creatine Monohydrate By Wellcore _ The Ultimate Muscle Fuel(720P_HD).mp4" },
                 { name: "MASS GAINER EXTREME", price: "14,000", desc: "1200 Calories for hard gainers.", video: "/videos/Prozis _ Real Mass Gainer(720P_HD).mp4" },
